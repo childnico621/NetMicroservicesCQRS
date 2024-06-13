@@ -1,15 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using MediatR;
-using System.Reflection;
-using TiendaServicios.Api.Autor.Persistence;
-using Microsoft.AspNetCore.Hosting;
-using TiendaServicios.Api.Autor.Application.Command;
-using Microsoft.OpenApi.Models;
-using FluentValidation.AspNetCore;
-using TiendaServicios.Api.Autor.Model.Request;
 using FluentValidation;
-using TiendaServicios.Api.Autor.Model.Validators;
+using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using TiendaServicios.Api.Autor.Application.Queries;
+using TiendaServicios.Api.Autor.Model.Request;
+using TiendaServicios.Api.Autor.Model.Validators;
+using TiendaServicios.Api.Autor.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,9 +33,9 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "SIM Core API",
+        Title = "MS Authors",
         Version = "v1",
-        Description = "Servicio Principal SIM para registro de plantas Eólicas y Solares"
+        Description = "Servicio para administracion de Autores de libros"
     });
 });
 
