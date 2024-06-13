@@ -1,0 +1,6 @@
+@TiendaServicios.Api.Book_HostAddress = http://localhost:5048
+
+GET {{TiendaServicios.Api.Book_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
