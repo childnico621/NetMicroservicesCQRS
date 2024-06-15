@@ -14,7 +14,7 @@ builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(typeof(P
 
 builder.Services.AddDbContext<LibraryContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DbBooksConn")));
 
-//GetBookQueryHandler
+
 builder.Services.AddAutoMapper(typeof(GetBookQueryHandler));
 
 builder.Services.AddFluentValidationAutoValidation();
