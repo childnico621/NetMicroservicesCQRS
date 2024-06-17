@@ -7,7 +7,7 @@ namespace TiendaServicios.Api.Autor.Persistence
     {
         public AuthorContext(DbContextOptions<AuthorContext> options):base(options) { }
 
-        public DbSet<BookAuthor> BookAuthors { get; set; } = null!;
-        public DbSet<Degree> Degrees { get; set; } = null!;
+        public virtual DbSet<BookAuthor> BookAuthors { get; set; } = null!;
+        public virtual DbSet<Degree> Degrees { get; set; } = null!;
     }
 }
