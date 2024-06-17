@@ -8,6 +8,6 @@ namespace TiendaServicios.Api.Book.Persistence
     {
         public LibraryContext(DbContextOptions<LibraryContext> options) : base(options) { }
 
-        public DbSet<BookMaterial> Library { get; set; } = null!;
+        public virtual DbSet<BookMaterial> Library { get; set; } = null!;
     }
 }

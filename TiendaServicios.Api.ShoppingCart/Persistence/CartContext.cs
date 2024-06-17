@@ -8,9 +8,8 @@ namespace TiendaServicios.Api.ShoppingCart.Persistence
     {
         public CartContext(DbContextOptions<CartContext> options) : base(options) {        }
 
-        public DbSet<CartSession> CartSessions { get; set; } = null!;
-
-        public DbSet<CartDetail> CartDetails { get; set; } = null!;
+        public virtual DbSet<CartSession> CartSessions { get; set; } = null!;               
+        public virtual DbSet<CartDetail> CartDetails { get; set; } = null!;
 
     }
 }
