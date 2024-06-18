@@ -45,5 +45,5 @@ jobs:
       if: always()
       with:
         name: .NET Tests
-        path: TiendaServicios.Api.Test.Books/TestResults/test_results.trx
+        path: TiendaServicios.Api.Test.Books/TestResults/test_results-${{ github.run_id }}.trx
         reporter: dotnet-trx
