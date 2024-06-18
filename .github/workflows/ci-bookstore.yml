@@ -34,13 +34,13 @@ jobs:
     - name: Publish test results
       uses: actions/upload-artifact@v2
       with:
-        name: test-results-${{ github.run_id }}
-        path: TiendaServicios.Api.Test.Books/TestResults
+        name: test-results
+        path: TiendaServicios.Api.Test.Books/ut-results
 
     - name: Test Reporter
       uses: dorny/test-reporter@v1
       if: always()
       with:
         name: .NET Tests
-        path: TiendaServicios.Api.Test.Books/TestResults/test_results-${{ github.run_id }}.trx
+        path: TiendaServicios.Api.Test.Books/ut-results/test_results.trx
         reporter: dotnet-trx
