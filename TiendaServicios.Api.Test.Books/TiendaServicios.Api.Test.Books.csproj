@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="TestResults\" />
+    <Folder Include="ut-results\" />
   </ItemGroup>
 
 </Project>

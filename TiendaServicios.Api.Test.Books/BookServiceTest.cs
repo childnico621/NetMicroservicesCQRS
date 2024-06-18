@@ -1,20 +1,14 @@
 using AutoMapper;
-using Moq;
+using TiendaServicios.Api.Book.Application.Commands;
 using TiendaServicios.Api.Book.Application.Queries;
 using TiendaServicios.Api.Book.Model.Dto;
-using TiendaServicios.Api.Book.Persistence;
-using GenFu;
-using TiendaServicios.Api.Book.Model;
-using Microsoft.EntityFrameworkCore;
-using TiendaServicios.Api.Test.Books.Fixture;
-using System.Reflection.Metadata;
 using TiendaServicios.Api.Book.Model.Request;
-using TiendaServicios.Api.Book.Application.Commands;
 using TiendaServicios.Api.Book.Model.Response;
+using TiendaServicios.Api.Test.Books.Fixture;
 
 namespace TiendaServicios.Api.Test.Books
 {
-    public class BooServiceTest
+    public class BookServiceTest
     {
 
 
