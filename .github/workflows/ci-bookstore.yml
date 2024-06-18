@@ -29,12 +29,12 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Test specific project
-      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx" TiendaServicios.Api.Test.Books/TiendaServicios.Api.Test.Books.csproj
+      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test_results-${{ github.run_id }}.trx" TiendaServicios.Api.Test.Books/TiendaServicios.Api.Test.Books.csproj
 
     - name: Publish test results
       uses: actions/upload-artifact@v2
       with:
-        name: test-results
+        name: test-results-${{ github.run_id }}
         path: TiendaServicios.Api.Test.Books/ut-results
 
     - name: Test Reporter
@@ -42,5 +42,5 @@ jobs:
       if: always()
       with:
         name: .NET Tests
-        path: TiendaServicios.Api.Test.Books/ut-results/test_results.trx
+        path: TiendaServicios.Api.Test.Books/ut-results/test_results-${{ github.run_id }}.trx
         reporter: dotnet-trx
