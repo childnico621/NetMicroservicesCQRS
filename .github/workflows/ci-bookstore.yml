@@ -40,7 +40,7 @@ jobs:
         name: test-results-${{ github.run_id }}
         path: TiendaServicios.Api.Test.Books/TestResults
 
-    - name: List TestResults directory contents II
+    - name: List TestResults directory contents I
       run: ls -la ./TiendaServicios.Api.Test.Books/TestResults
     
     - name: Test Reporter
