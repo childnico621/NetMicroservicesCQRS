@@ -34,12 +34,18 @@ jobs:
     - name: Test specific project
       run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=TestResults/test_results.trx" TiendaServicios.Api.Test.Books/TiendaServicios.Api.Test.Books.csproj
 
+    - name: List TestResults directory contents I
+      run: ls -la TiendaServicios.Api.Test.Books/TestResults
+      
     - name: Publish test results
       uses: actions/upload-artifact@v2
       with:
         name: test-results-${{ github.run_id }}
         path: TiendaServicios.Api.Test.Books/TestResults
 
+    - name: List TestResults directory contents II
+      run: ls -la TiendaServicios.Api.Test.Books/TestResults
+    
     - name: Test Reporter
       uses: dorny/test-reporter@v1
       if: always()
