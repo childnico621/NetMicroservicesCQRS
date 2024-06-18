@@ -44,7 +44,7 @@ jobs:
         path: TiendaServicios.Api.Test.Books/TestResults
 
     - name: List TestResults directory contents II
-      run: ls -la ./TiendaServicios.Api.Test.Books/TestResults/
+      run: ls -la ./TiendaServicios.Api.Test.Books/TestResults/TestResults
     
     - name: Test Reporter
       uses: dorny/test-reporter@v1
