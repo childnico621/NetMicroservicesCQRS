@@ -48,5 +48,5 @@ jobs:
       if: always()
       with:
         name: .NET Tests
-        path: TiendaServicios.Api.Test.Books/TestResults/test_results.trx
+        path: ./TiendaServicios.Api.Test.Books/TestResults/test_results.trx
         reporter: dotnet-trx
