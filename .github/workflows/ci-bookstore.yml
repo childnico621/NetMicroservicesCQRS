@@ -28,19 +28,25 @@ jobs:
     - name: Build solution
       run: dotnet build --no-restore
 
+    - name: Create TestResults directory
+      run: mkdir -p TiendaServicios.Api.Test.Books/TestResults
+      
     - name: Test specific project
-      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test_results-${{ github.run_id }}.trx" TiendaServicios.Api.Test.Books/TiendaServicios.Api.Test.Books.csproj
-
+      run: dotnet test --no-build --collect:"XPlat Code Coverage;Format=json,lcov,cobertura" --verbosity normal --logger "trx;LogFileName=test_results.trx" TiendaServicios.Api.Test.Books/TiendaServicios.Api.Test.Books.csproj
+      
     - name: Publish test results
       uses: actions/upload-artifact@v2
       with:
         name: test-results-${{ github.run_id }}
-        path: TiendaServicios.Api.Test.Books/ut-results
+        path: TiendaServicios.Api.Test.Books/TestResults
 
+    - name: List TestResults directory contents I
+      run: ls -la ./TiendaServicios.Api.Test.Books/TestResults
+    
     - name: Test Reporter
       uses: dorny/test-reporter@v1
       if: always()
       with:
         name: .NET Tests
-        path: TiendaServicios.Api.Test.Books/ut-results/test_results-${{ github.run_id }}.trx
+        path: ./TiendaServicios.Api.Test.Books/TestResults/test_results.trx
         reporter: dotnet-trx
