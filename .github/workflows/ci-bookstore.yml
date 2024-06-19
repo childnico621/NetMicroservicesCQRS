@@ -47,15 +47,13 @@ jobs:
         output: both
         thresholds: '20 20'
 
-    - name: Move Coverage to TestResult
-      run: mv ./code-coverage-results.md /TiendaServicios.Api.Test.Books/TestResults/code-coverage-results.md
-      
+   
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2
       if: github.event_name == 'pull_request'
       with:
         recreate: true
-        path: ./TiendaServicios.Api.Test.Books/TestResults/code-coverage-results.md
+        path: ./code-coverage-results.md
         
     - name: Publish test results
       uses: actions/upload-artifact@v2
