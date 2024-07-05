@@ -7,7 +7,7 @@ on:
   push:
     branches: [ "dev" ]
   pull_request:
-    branches: [ "dev" ]
+    branches: [ "main","dev" ]
 
 jobs:
   build-and-test:
@@ -32,8 +32,29 @@ jobs:
       run: mkdir -p TiendaServicios.Api.Test.Books/TestResults
       
     - name: Test specific project
-      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx" TiendaServicios.Api.Test.Books/TiendaServicios.Api.Test.Books.csproj
-      
+      run: dotnet test --no-build --collect:"XPlat Code Coverage" --results-directory ./TiendaServicios.Api.Test.Books/TestResults --verbosity normal --logger "trx;LogFileName=test_results.trx" TiendaServicios.Api.Test.Books/TiendaServicios.Api.Test.Books.csproj
+
+    - name: Code Coverage Report
+      uses: irongut/CodeCoverageSummary@v1.3.0
+      with:
+        filename: ./TiendaServicios.Api.Test.Books/TestResults/**/coverage.cobertura.xml
+        badge: true
+        fail_below_min: true
+        format: markdown
+        hide_branch_rate: false
+        hide_complexity: false
+        indicators: true
+        output: both
+        thresholds: '20 20'
+
+   
+    - name: Add Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event_name == 'pull_request'
+      with:
+        recreate: true
+        path: ./code-coverage-results.md
+        
     - name: Publish test results
       uses: actions/upload-artifact@v2
       with:
@@ -47,6 +68,6 @@ jobs:
       uses: dorny/test-reporter@v1
       if: always()
       with:
-        name: .NET Tests
+        name: .NET Tests Result
         path: ./TiendaServicios.Api.Test.Books/TestResults/test_results.trx
         reporter: dotnet-trx
