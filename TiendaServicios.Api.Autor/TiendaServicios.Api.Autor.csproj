@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TiendaServicios.Messenger.Email\TiendaServicios.Messenger.Email.csproj" />
     <ProjectReference Include="..\TiendaServicios.RabbitMQ.Bus\TiendaServicios.RabbitMQ.Bus.csproj" />
   </ItemGroup>
 

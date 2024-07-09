@@ -8,6 +8,8 @@ using TiendaServicios.Api.Autor.Model.Request;
 using TiendaServicios.Api.Autor.Model.Validators;
 using TiendaServicios.Api.Autor.Persistence;
 using TiendaServicios.Api.Autor.RabbitHandler;
+using TiendaServicios.Messenger.Email.SendGrid.Implement;
+using TiendaServicios.Messenger.Email.SendGrid.Interface;
 using TiendaServicios.RabbitMQ.Bus.BusRabbit;
 using TiendaServicios.RabbitMQ.Bus.Implement;
 using TiendaServicios.RabbitMQ.Bus.QueueEvent;
@@ -20,6 +22,8 @@ builder.Services.AddSingleton<IRabbitEventBus, RabbitEventBus>(sp =>
     var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
     return new RabbitEventBus(sp.GetService<IMediator>(), scopeFactory);
 });
+
+builder.Services.AddSingleton<ISendGridDispatch, SendGridDispatch>();
 
 builder.Services.AddTransient<EmailEventHandler>();
 
