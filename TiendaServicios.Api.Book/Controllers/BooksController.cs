@@ -23,10 +23,10 @@ namespace TiendaServicios.Api.Book.Controllers
         }
 
 
-        [HttpGet("{Id}")]
-        public async Task<ActionResult> Get(Guid Id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult> Get(Guid id)
         {
-            var result = await _mediator.Send(new GetSingleBookRequestModel { BookId = Id });
+            var result = await _mediator.Send(new GetSingleBookRequestModel { BookId = id });
             return Ok(result);
         }
 

@@ -1,15 +1,26 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TiendaServicios.Api.Book.Application.Queries;
 using TiendaServicios.Api.Book.Model.Request;
 using TiendaServicios.Api.Book.Model.Validators;
 using TiendaServicios.Api.Book.Persistence;
+using TiendaServicios.RabbitMQ.Bus.BusRabbit;
+using TiendaServicios.RabbitMQ.Bus.Implement;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//builder.Services.AddTransient<IRabbitEventBus, RabbitEventBus>();
+builder.Services.AddSingleton<IRabbitEventBus, RabbitEventBus>(sp =>
+{
+    var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
+    return new RabbitEventBus(sp.GetService<IMediator>(), scopeFactory);
+});
+
 builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly); });
 
 builder.Services.AddDbContext<LibraryContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DbBooksConn")));

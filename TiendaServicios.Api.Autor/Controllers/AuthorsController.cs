@@ -17,14 +17,14 @@ namespace TiendaServicios.Api.Autor.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("All")]
+        [HttpGet]
         public async Task<ActionResult> AuthorList([FromQuery] GetAuthorsRequestModel model)
         {
             var result = await _mediator.Send(model);
             return Ok(result);
         }
 
-        [HttpGet("Single/{AuthorId}")]
+        [HttpGet("{AuthorId}")]
         public async Task<ActionResult> SingleAuthor([FromRoute] string AuthorId)
         {
             var result= await _mediator.Send(new GetSingleAuthorRequestModel { BookAuthorId = new Guid(AuthorId) });

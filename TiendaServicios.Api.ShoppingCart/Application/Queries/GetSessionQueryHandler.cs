@@ -1,11 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using TiendaServicios.Api.ShoppingCart.Model;
 using TiendaServicios.Api.ShoppingCart.Model.Dto;
 using TiendaServicios.Api.ShoppingCart.Model.Request;
 using TiendaServicios.Api.ShoppingCart.Persistence;
 using TiendaServicios.Api.ShoppingCart.RemoteInterface;
-using TiendaServicios.Api.ShoppingCart.RemoteService;
 
 namespace TiendaServicios.Api.ShoppingCart.Application.Queries
 {
