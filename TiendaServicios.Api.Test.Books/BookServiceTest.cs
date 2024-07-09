@@ -1,10 +1,12 @@
 using AutoMapper;
+using Moq;
 using TiendaServicios.Api.Book.Application.Commands;
 using TiendaServicios.Api.Book.Application.Queries;
 using TiendaServicios.Api.Book.Model.Dto;
 using TiendaServicios.Api.Book.Model.Request;
 using TiendaServicios.Api.Book.Model.Response;
 using TiendaServicios.Api.Test.Books.Fixture;
+using TiendaServicios.RabbitMQ.Bus.BusRabbit;
 
 namespace TiendaServicios.Api.Test.Books
 {
@@ -61,7 +63,8 @@ namespace TiendaServicios.Api.Test.Books
                 Published = Convert.ToDateTime("1915-01-01T00:00:00"),
                 AuthorId = new Guid("5a5d733b-f92a-441b-99ed-071fb4e38960")
             };
-            var sut = new AddBookCommandHandler(mockContext);
+            var mockRabbit = new Mock<IRabbitEventBus>();
+            var sut = new AddBookCommandHandler(mockContext, mockRabbit.Object);
 
             //act
             var result = await sut.Handle(request, CancellationToken.None);

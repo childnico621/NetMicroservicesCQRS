@@ -3,11 +3,11 @@ using TiendaServicios.RabbitMQ.Bus.Events;
 
 namespace TiendaServicios.RabbitMQ.Bus.BusRabbit
 {
-    internal interface IBusRabbitEventBus
+    public interface IRabbitEventBus
     {
-        Task Send<T>(T command)where T:Command;
+        Task SendCommand<T>(T command)where T:Command;
         void Publish<T>(T @event) where T : Event;
 
-        void Subscribe<T, TH>(T @event) where T : Event where TH: IEventHandler<T>;
+        void Subscribe<T, TH>() where T : Event where TH: IEventHandler<T>;
     }
 }
