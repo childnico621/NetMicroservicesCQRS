@@ -68,6 +68,7 @@ jobs:
           FOD_UPLOADER_NOTES: 'Triggered by GitHub Actions (${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})'
 
       # Once scan completes, pull SAST issues from Fortify on Demand and generate SARIF output.
+      
       - name: Export results to GitHub-optimized SARIF
         uses: fortify/gha-export-vulnerabilities@fcb374411cff9809028c911dabb8b57dbdae623b
         with:
