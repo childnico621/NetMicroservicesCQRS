@@ -1,5 +1,6 @@
 using AutoMapper;
 using Moq;
+using Microsoft.Extensions.Logging.Abstractions;
 using TiendaServicios.Api.Book.Application.Commands;
 using TiendaServicios.Api.Book.Application.Queries;
 using TiendaServicios.Api.Book.Model.Dto;
@@ -19,7 +20,7 @@ namespace TiendaServicios.Api.Test.Books
         {
             //arrange
             var mockContext = await GeneralFixture.GetDatabaseContext();
-            var mapConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingTest()));
+            var mapConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingTest()), NullLoggerFactory.Instance);
             var mapper = mapConfig.CreateMapper();
             var sut = new GetBookQueryHandler(mockContext, mapper);
             var request = new GetBooksRequestModel();
@@ -37,7 +38,7 @@ namespace TiendaServicios.Api.Test.Books
         {
             //arrange
             var mockContext = await GeneralFixture.GetDatabaseContext();
-            var mapConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingTest()));
+            var mapConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingTest()), NullLoggerFactory.Instance);
             var mapper = mapConfig.CreateMapper();
             var sut = new FilterGetBookQueryHandler(mockContext, mapper);
             var request = new GetSingleBookRequestModel() { BookId = new Guid("8c90c679-8bff-48cd-0493-08dc8cb4c889") };
