@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -16,18 +16,20 @@ namespace TiendaServicios.RabbitMQ.Bus.Implement
         private readonly Dictionary<string, List<Type>> _handlers;
         private readonly List<Type> _eventTypes;
         private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IConnectionFactory? _connectionFactory;
 
-        public RabbitEventBus(IMediator mediator, IServiceScopeFactory serviceScopeFactory)
+        public RabbitEventBus(IMediator mediator, IServiceScopeFactory serviceScopeFactory, IConnectionFactory? connectionFactory = null)
         {
             _mediator = mediator;
             _serviceScopeFactory = serviceScopeFactory;
+            _connectionFactory = connectionFactory;
             _handlers = new Dictionary<string, List<Type>>();
             _eventTypes = new List<Type>();
         }
 
         public void Publish<T>(T @event) where T : Event
         {
-            var factory = new ConnectionFactory { HostName = "localhost", Port = 5672, UserName = "nagudelo", Password = "Nick.621" };
+            var factory = _connectionFactory ?? new ConnectionFactory { HostName = "localhost", Port = 5672, UserName = "nagudelo", Password = "Nick.621" };
             using (var conn = factory.CreateConnection())
             using (var channel = conn.CreateModel())
             {
@@ -64,7 +66,7 @@ namespace TiendaServicios.RabbitMQ.Bus.Implement
 
             _handlers[eventName].Add(handlerEventType);
 
-            var factory = new ConnectionFactory { HostName = "localhost", Port = 5672, UserName = "nagudelo", Password = "Nick.621", DispatchConsumersAsync=true };
+            var factory = _connectionFactory ?? new ConnectionFactory { HostName = "localhost", Port = 5672, UserName = "nagudelo", Password = "Nick.621", DispatchConsumersAsync = true };
             var conn = factory.CreateConnection();
             var channel = conn.CreateModel();
 

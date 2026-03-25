@@ -56,7 +56,7 @@ jobs:
         path: ./code-coverage-results.md
         
     - name: Publish test results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: test-results-${{ github.run_id }}
         path: TiendaServicios.Api.Test.Books/TestResults
