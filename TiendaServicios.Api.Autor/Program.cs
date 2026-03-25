@@ -39,7 +39,7 @@ builder.Services.AddDbContext<AuthorContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("psdbconnection"));
 });
 
-builder.Services.AddAutoMapper(typeof(GetAuthorQueryHandler));
+builder.Services.AddAutoMapper(cfg => {}, typeof(GetAuthorQueryHandler));
 builder.Services.AddControllers();
 
 builder.Services.AddFluentValidationAutoValidation();

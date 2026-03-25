@@ -1,4 +1,4 @@
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +26,7 @@ builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(typeof(P
 builder.Services.AddDbContext<LibraryContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DbBooksConn")));
 
 
-builder.Services.AddAutoMapper(typeof(GetBookQueryHandler));
+builder.Services.AddAutoMapper(cfg => {}, typeof(GetBookQueryHandler));
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddScoped<IValidator<AddBookRequestModel>, AddBookValidator>();
@@ -41,7 +41,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Books API",
         Version = "v1",
-        Description = "Servicio administraci�n de libros"
+        Description = "Servicio administración de libros"
     });
 });
 

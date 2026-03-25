@@ -1,5 +1,6 @@
 using AutoMapper;
 using Moq;
+using Microsoft.Extensions.Logging.Abstractions;
 using TiendaServicios.Api.Book.Application.Commands;
 using TiendaServicios.Api.Book.Application.Queries;
 using TiendaServicios.Api.Book.Model.Dto;
@@ -19,7 +20,7 @@ namespace TiendaServicios.Api.Test.Books
         {
             //arrange
             var mockContext = await GeneralFixture.GetDatabaseContext();
-            var mapConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingTest()));
+            var mapConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingTest()), NullLoggerFactory.Instance);
             var mapper = mapConfig.CreateMapper();
             var sut = new GetBookQueryHandler(mockContext, mapper);
             var request = new GetBooksRequestModel();
@@ -37,7 +38,7 @@ namespace TiendaServicios.Api.Test.Books
         {
             //arrange
             var mockContext = await GeneralFixture.GetDatabaseContext();
-            var mapConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingTest()));
+            var mapConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingTest()), NullLoggerFactory.Instance);
             var mapper = mapConfig.CreateMapper();
             var sut = new FilterGetBookQueryHandler(mockContext, mapper);
             var request = new GetSingleBookRequestModel() { BookId = new Guid("8c90c679-8bff-48cd-0493-08dc8cb4c889") };
@@ -73,6 +74,46 @@ namespace TiendaServicios.Api.Test.Books
             Assert.NotNull(result);
             Assert.IsType<AddBookResponseModel>(result);
             Assert.Equal(31, mockContext.Library.Count());
+        }
+        [Fact]
+        public async Task AddBookExisting()
+        {
+            //arrange
+            var mockContext = await GeneralFixture.GetDatabaseContext();
+            var request = new AddBookRequestModel
+            {
+                Title = "El Viejo y el Mar", // Already in fixture
+                Published = Convert.ToDateTime("1952-09-01T00:00:00"),
+                AuthorId = new Guid("6040706d-adb6-46bb-8ae9-0b460e65a015")
+            };
+            var mockRabbit = new Mock<IRabbitEventBus>();
+            var sut = new AddBookCommandHandler(mockContext, mockRabbit.Object);
+
+            //act
+            var result = await sut.Handle(request, CancellationToken.None);
+
+            //assert
+            Assert.NotNull(result);
+            Assert.IsType<AddBookResponseModel>(result);
+            Assert.Equal(new Guid("8c90c679-8bff-48cd-0493-08dc8cb4c889"), result.BookId);
+        }
+
+        [Fact]
+        public async Task GetQueryBookNotFound()
+        {
+            //arrange
+            var mockContext = await GeneralFixture.GetDatabaseContext();
+            var mapConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingTest()), NullLoggerFactory.Instance);
+            var mapper = mapConfig.CreateMapper();
+            var sut = new FilterGetBookQueryHandler(mockContext, mapper);
+            var request = new GetSingleBookRequestModel() { BookId = Guid.NewGuid() }; // Random ID
+
+            //act
+            var result = await sut.Handle(request, CancellationToken.None);
+
+            //assert
+            Assert.NotNull(result);
+            Assert.Null(result.Title); // Should be empty/new DTO
         }
     }
 }
